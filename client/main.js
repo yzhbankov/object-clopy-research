@@ -11,21 +11,27 @@ const LIBRARIES = {
 
 const objectDepths = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987];
 
-function createObj(depth) {
+function createObj(depth, width) {
     const obj = {};
     let i = 0;
-
-    function level(obj) {
-        while (i < depth) {
-            if (Object.keys(obj).length === 0) {
-                obj.a = {};
+    if (depth) {
+        function level(obj) {
+            while (i < depth) {
+                if (Object.keys(obj).length === 0) {
+                    obj.a = {};
+                }
+                i++;
+                level(obj.a)
             }
+        }
+
+        level(obj);
+    } else if (width) {
+        while (i < width) {
+            obj[i] = 'Property' + i;
             i++;
-            level(obj.a)
         }
     }
-
-    level(obj);
     return obj;
 }
 
@@ -53,7 +59,7 @@ function cloneTimesForObjects() {
     });
 
     for (let i = 0; i < objectDepths.length; i++) {
-        let obj = createObj(objectDepths[i]);
+        let obj = createObj(null, objectDepths[i]);
         times[LIBRARIES.PARSE].push(getCloneTime(obj, LIBRARIES.PARSE));
         times[LIBRARIES.CLONE].push(getCloneTime(obj, LIBRARIES.CLONE));
         times[LIBRARIES.DEEPCOPY].push(getCloneTime(obj, LIBRARIES.DEEPCOPY));
@@ -62,11 +68,12 @@ function cloneTimesForObjects() {
 
     return times;
 }
+
 const times = {};
 Object.keys(LIBRARIES).map(key => {
     times[key] = []
 });
-for(let i = 0; i < 5; i++) {
+for (let i = 0; i < 5; i++) {
     console.log('TIMES ', cloneTimesForObjects());
 }
 /*function getAverageValue() {
