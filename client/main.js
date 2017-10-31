@@ -1,42 +1,79 @@
-var clone = require('clone');
-var deepcope = require('deepcopy');
-var _ = require('lodash')
-const obj = {};
+import clone from 'clone';
+import deepcopy from 'deepcopy';
+import _ from 'lodash';
 
-function createObj(depth){
+const LIBRARIES = {
+    CLONE: 'CLONE',
+    DEEPCOPY: 'DEEPCOPY',
+    LODASH: 'LODASH',
+    PARSE: 'PARSE'
+};
 
+const objectDepths = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987];
+
+function createObj(depth) {
+    const obj = {};
     let i = 0;
-    function level(obj){
-        while(i< depth){
-            if (Object.keys(obj).length === 0){
+
+    function level(obj) {
+        while (i < depth) {
+            if (Object.keys(obj).length === 0) {
                 obj.a = {};
             }
             i++;
             level(obj.a)
         }
     }
+
     level(obj);
+    return obj;
 }
 
-createObj(200);
-let timeDiff = 0;
-let sum = 0;
-function getTime(obj) {
+function getCloneTime(obj, library) {
     const start = new Date().getTime();
     for (let i = 0; i < 10000; i++) {
-        //JSON.parse(JSON.stringify(obj));
-        //clone(obj);
-        //deepcope(obj);
-        _.cloneDeep(obj);
+        if (library === LIBRARIES.PARSE) {
+            JSON.parse(JSON.stringify(obj));
+        } else if (library === LIBRARIES.CLONE) {
+            clone(obj);
+        } else if (library === LIBRARIES.DEEPCOPY) {
+            deepcopy(obj);
+        } else if (library === LIBRARIES.LODASH) {
+            _.cloneDeep(obj);
+        }
     }
     const end = new Date().getTime();
-    timeDiff = end - start;
-    sum+=timeDiff
-    console.log('Execution time: ' + timeDiff);
+    return end - start;
 }
 
-for(let i = 0; i < 10; i++){
+function cloneTimesForObjects() {
+    const times = {};
+    Object.keys(LIBRARIES).map(key => {
+        times[key] = []
+    });
 
-    getTime(obj);
+    for (let i = 0; i < objectDepths.length; i++) {
+        let obj = createObj(objectDepths[i]);
+        times[LIBRARIES.PARSE].push(getCloneTime(obj, LIBRARIES.PARSE));
+        times[LIBRARIES.CLONE].push(getCloneTime(obj, LIBRARIES.CLONE));
+        times[LIBRARIES.DEEPCOPY].push(getCloneTime(obj, LIBRARIES.DEEPCOPY));
+        times[LIBRARIES.LODASH].push(getCloneTime(obj, LIBRARIES.LODASH));
+    }
+
+    return times;
 }
-console.log(sum / 10);
+const times = {};
+Object.keys(LIBRARIES).map(key => {
+    times[key] = []
+});
+for(let i = 0; i < 5; i++) {
+    console.log('TIMES ', cloneTimesForObjects());
+}
+/*function getAverageValue() {
+    let sum = 0;
+    const clonedObject = createObj()
+    for (let i = 0; i < 4; i++) {
+        sum += getCloneTime(obj, library);
+    }
+    console.log('Library:', library, ' ', sum / 4);
+}*/
