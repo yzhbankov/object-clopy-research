@@ -14,6 +14,28 @@ module.exports = {
                 test: /\.js$/,
                 loader: "babel-loader",
                 exclude: [/node_modules/, /public/]
+            },
+            {
+                test: /\.css$/,
+                loader: "style-loader!css-loader!autoprefixer-loader",
+                exclude: [/node_modules/, /public/]
+            },
+            {
+                test: /\.sass$/,
+                loader: "style-loader!css-loader!autoprefixer-loader!sass-loader",
+                exclude: [/node_modules/, /public/]
+            },
+            {
+                test: /\.jsx?$/,
+                loader: "babel-loader",
+                query: {
+                    presets: ['es2015', 'react']
+                },
+                exclude: [/node_modules/, /public/]
+            },
+            {
+                test: /\.json$/,
+                loader: "json-loader"
             }
         ]
     }
