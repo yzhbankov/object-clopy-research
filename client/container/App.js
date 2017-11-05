@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
-import {getJsonParseData} from './../store/actions';
+import {getJsonParseData, getCloneData, getDeepCopyData, getLodashData} from './../store/actions';
 
 class App extends React.Component {
     constructor(props) {
@@ -10,7 +10,18 @@ class App extends React.Component {
 
     getParseData() {
         this.props.dispatch(getJsonParseData());
-        console.log(this.props.state);
+    }
+
+    getCloneData() {
+        this.props.dispatch(getCloneData());
+    }
+
+    getDeepCopyData() {
+        this.props.dispatch(getDeepCopyData());
+    }
+
+    getLodashData() {
+        this.props.dispatch(getLodashData());
     }
 
     render() {
@@ -20,6 +31,9 @@ class App extends React.Component {
             <div>
                 <div style={{textAlign:'center', fontSize:'1.4em'}}>Object copy time</div>
                 <button onClick={()=>{this.getParseData()}}>Get parse data</button>
+                <button onClick={()=>{this.getCloneData()}}>Get clone data</button>
+                <button onClick={()=>{this.getDeepCopyData()}}>Get deep copy data</button>
+                <button onClick={()=>{this.getLodashData()}}>Get lodash data</button>
             </div>
         );
     }
