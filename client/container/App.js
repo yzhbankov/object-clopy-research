@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 
 import BarChart from './../components/BarChart';
 
-import {getJsonParseData, getCloneData, getDeepCopyData, getLodashData} from './../store/actions';
+import {getJsonParseData, getCloneData, getDeepCopyData, getLodashData, getAllData} from './../store/actions';
 
 class App extends React.Component {
     constructor(props) {
@@ -26,6 +26,10 @@ class App extends React.Component {
         this.props.dispatch(getLodashData());
     }
 
+    getData(){
+        this.props.dispatch(getAllData());
+    }
+
     render() {
         console.log(this.props.state);
         const chartData = [];
@@ -34,13 +38,14 @@ class App extends React.Component {
             <div>
                 <div>
                     <div style={{textAlign:'center', fontSize:'1.4em'}}>Object copy time</div>
+                    <button onClick={()=>{this.getData()}}>Get all data</button>
                     <button onClick={()=>{this.getParseData()}}>Get parse data</button>
                     <button onClick={()=>{this.getCloneData()}}>Get clone data</button>
                     <button onClick={()=>{this.getDeepCopyData()}}>Get deep copy data</button>
                     <button onClick={()=>{this.getLodashData()}}>Get lodash data</button>
                 </div>
                 <div>
-                    <BarChart/>
+                    <BarChart props={this.props.state}/>
                 </div>
             </div>
         );
@@ -48,7 +53,6 @@ class App extends React.Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state);
     return {
         state: state
     }

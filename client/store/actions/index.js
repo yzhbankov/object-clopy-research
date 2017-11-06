@@ -64,6 +64,38 @@ export const getLodashData = () => (dispatch) => {
     })
 };
 
+export const getAllData = () => (dispatch) => {
+    new Promise((resolve, reject) => {
+        const data = {clone:[], lodash:[], deepcopy:[], parse:[]};
+        for (let i = 0; i<objectDepths.length; i++){
+            const newObject = createObject(objectDepths[i]);
+            data.deepcopy.push(getCloneTime(newObject, LIBRARIES.DEEPCOPY));
+        }
+
+        for (let i = 0; i<objectDepths.length; i++){
+            const newObject = createObject(objectDepths[i]);
+            data.lodash.push(getCloneTime(newObject, LIBRARIES.LODASH));
+        }
+
+        for (let i = 0; i<objectDepths.length; i++){
+            const newObject = createObject(objectDepths[i]);
+            data.clone.push(getCloneTime(newObject, LIBRARIES.CLONE));
+        }
+
+        for (let i = 0; i<objectDepths.length; i++){
+            const newObject = createObject(objectDepths[i]);
+            data.parse.push(getCloneTime(newObject, LIBRARIES.PARSE));
+        }
+
+        dispatch({
+            type: ACTIONS.GET_ALL_DATA,
+            params: data
+        });
+
+    })
+};
+
+
 /*function cloneTimesForObjects() {
     const times = {};
     Object.keys(LIBRARIES).map(key => {

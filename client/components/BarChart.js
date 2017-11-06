@@ -4,12 +4,12 @@ import {connect} from 'react-redux'
 import ReactHighcharts from 'react-highcharts'; // Expects that Highcharts was loaded in the code.
 
 
-class BarChart extends React.Component {
+export default class BarChart extends React.Component {
     constructor(props) {
         super(props);
     }
 
-    componentWillReceiveProps() {
+    componentWillReceiveProps(nextProps) {
         const objectDepths = [1, 2, 3, 5, 8, 13, 21, 34/*, 55, 89, 144, 233, 377, 610, 987*/];
 
         const config = {
@@ -30,21 +30,20 @@ class BarChart extends React.Component {
             },
             series: [{
                 name: 'JSON.parse',
-                data: this.props.parseData
+                data: nextProps.props.allData ? nextProps.props.allData.parse : []
             }, {
                 name: 'clone',
-                data: this.props.cloneData
+                data: nextProps.props.allData ? nextProps.props.allData.clone : []
             },
                 {
                     name: 'deep copy',
-                    data: this.props.deepCopyData
+                    data: nextProps.props.allData ? nextProps.props.allData.deepcopy : []
                 },
                 {
                     name: 'lodash',
-                    data: this.props.lodashData
+                    data: nextProps.props.allData ? nextProps.props.allData.lodash : []
                 }]
         };
-        console.log('PROPERTIES', this.props);
         ReactDOM.render(<ReactHighcharts config={config}/>, document.getElementById('chartId'));
     }
 
@@ -54,15 +53,3 @@ class BarChart extends React.Component {
         </div>
     }
 }
-
-
-const mapStateToProps = state => {
-    return {
-        parseData: state.parseData ? state.parseData : [],
-        cloneData: state.cloneData ? state.cloneData : [],
-        deepCopyData: state.deepCopyData ? state.deepCopyData : [],
-        lodashData: state.lodashData ? state.lodashData : []
-    }
-};
-
-export default connect(mapStateToProps)(BarChart);
