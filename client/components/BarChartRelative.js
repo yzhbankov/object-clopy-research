@@ -10,7 +10,7 @@ export default class BarChartRelative extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         console.log('NEXT PROPS 2', nextProps);
-        const objectDepths = [1, 2, 3, 5, 8, 13, 21, 34/*, 55, 89, 144, 233, 377, 610, 987*/];
+        const objectDepths = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89/*, 144, 233, 377, 610, 987*/];
         let parseData = [];
         let cloneData = [];
         let deepCopyData = [];
@@ -46,7 +46,7 @@ export default class BarChartRelative extends React.Component {
             },
             yAxis: {
                 title: {
-                    text: 'Fruit eaten'
+                    text: 'Object depth'
                 }
             },
             series: [
