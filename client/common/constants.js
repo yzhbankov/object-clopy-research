@@ -12,5 +12,6 @@ export const ACTIONS = keyMirror({
     GET_CLONE_DATA: null,
     GET_DEEPCOPY_DATA: null,
     GET_LODASH_DATA: null,
-    GET_ALL_DATA: null
+    GET_ALL_DATA: null,
+    RELATIVE_TO:null
 });

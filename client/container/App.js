@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
 import BarChart from './../components/BarChart';
+import BarChartRelative from './../components/BarChartRelative';
 
 import {getJsonParseData, getCloneData, getDeepCopyData, getLodashData, getAllData} from './../store/actions';
 
@@ -31,7 +32,6 @@ class App extends React.Component {
     }
 
     render() {
-        console.log(this.props.state);
         const chartData = [];
         const chartOptions ={};
         return (
@@ -39,13 +39,16 @@ class App extends React.Component {
                 <div>
                     <div style={{textAlign:'center', fontSize:'1.4em'}}>Object copy time</div>
                     <button onClick={()=>{this.getData()}}>Get all data</button>
-                    <button onClick={()=>{this.getParseData()}}>Get parse data</button>
-                    <button onClick={()=>{this.getCloneData()}}>Get clone data</button>
-                    <button onClick={()=>{this.getDeepCopyData()}}>Get deep copy data</button>
-                    <button onClick={()=>{this.getLodashData()}}>Get lodash data</button>
                 </div>
                 <div>
                     <BarChart props={this.props.state}/>
+                </div>
+                <button onClick={()=>{this.getParseData()}}>Relative to JSON.parse</button>
+                <button onClick={()=>{this.getCloneData()}}>Relative to clone</button>
+                <button onClick={()=>{this.getDeepCopyData()}}>Relative to deep copy</button>
+                <button onClick={()=>{this.getLodashData()}}>Relative to lodash</button>
+                <div>
+                    <BarChartRelative props={this.props.state}/>
                 </div>
             </div>
         );
