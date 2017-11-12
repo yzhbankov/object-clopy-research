@@ -38,7 +38,7 @@ export default class BarChartRelative extends React.Component {
                 type: 'column'
             },
             title: {
-                text: 'Time of object copy'
+                text: 'Time of object copy, ms'
             },
             xAxis: {
                 title: {
