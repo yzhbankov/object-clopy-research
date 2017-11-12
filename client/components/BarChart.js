@@ -28,7 +28,7 @@ export default class BarChart extends React.Component {
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Copy ratio'
+                    text: 'Relative time'
                 }
             },
             tooltip: {
