@@ -38,10 +38,7 @@ export default class BarChartRelative extends React.Component {
                 type: 'column'
             },
             title: {
-                text: 'Monthly Average Rainfall'
-            },
-            subtitle: {
-                text: 'Source: WorldClimate.com'
+                text: 'Time of object copy'
             },
             xAxis: {
                 title: {
@@ -52,13 +49,13 @@ export default class BarChartRelative extends React.Component {
             yAxis: {
                 min: 0.8,
                 title: {
-                    text: 'Copy ratio'
+                    text: 'Relative time'
                 }
             },
             tooltip: {
                 headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                 pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                '<td style="padding:0"><b>{point.y:.2f}</b></td></tr>',
                 footerFormat: '</table>',
                 shared: true,
                 useHTML: true
