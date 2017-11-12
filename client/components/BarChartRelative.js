@@ -35,28 +35,48 @@ export default class BarChartRelative extends React.Component {
         }
         const config = {
             chart: {
-                renderTo: 'container',
-                type: 'bar'
+                type: 'column'
             },
             title: {
-                text: 'Objects deep copy velocity'
+                text: 'Monthly Average Rainfall'
+            },
+            subtitle: {
+                text: 'Source: WorldClimate.com'
             },
             xAxis: {
+                title: {
+                    text: 'Number of properties'
+                },
                 categories: objectDepths
             },
             yAxis: {
+                min: 0.8,
                 title: {
-                    text: 'Object depth'
+                    text: 'Copy ratio'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
                 }
             },
             series: [
                 {
-                name: 'JSON.parse',
-                data: parseData
+                    name: 'JSON.parse',
+                    data: parseData
                 },
                 {
-                name: 'clone',
-                data: cloneData
+                    name: 'clone',
+                    data: cloneData
                 },
                 {
                     name: 'deep copy',
@@ -71,7 +91,7 @@ export default class BarChartRelative extends React.Component {
     }
 
     render() {
-        return <div id="chartIdRelative">
+        return <div id="chartIdRelative" style={{width: '50%', margin:'0 auto'}}>
 
         </div>
     }

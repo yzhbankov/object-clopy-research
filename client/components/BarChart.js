@@ -14,24 +14,45 @@ export default class BarChart extends React.Component {
 
         const config = {
             chart: {
-                renderTo: 'container',
-                type: 'bar'
+                type: 'column'
             },
             title: {
-                text: 'Objects deep copy velocity'
+                text: 'Monthly Average Rainfall'
+            },
+            subtitle: {
+                text: 'Source: WorldClimate.com'
             },
             xAxis: {
+                title: {
+                    text: 'Number of properties'
+                },
                 categories: objectDepths
             },
             yAxis: {
+                min: 0,
                 title: {
-                    text: 'Fruit eaten'
+                    text: 'Copy ratio'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
                 }
             },
             series: [{
                 name: 'JSON.parse',
                 data: nextProps.props.allData ? nextProps.props.allData.parse : []
-            }, {
+            },
+                {
                 name: 'clone',
                 data: nextProps.props.allData ? nextProps.props.allData.clone : []
             },
@@ -48,7 +69,7 @@ export default class BarChart extends React.Component {
     }
 
     render() {
-        return <div id="chartId">
+        return <div id="chartId" style={{width: '50%', margin:'0 auto'}}>
 
         </div>
     }

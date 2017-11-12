@@ -35,7 +35,7 @@ export const getAllData = () => (dispatch) => {
         for (let j = 0; j < m; j++) {
 
             for (let i = 0; i < objectDepths.length; i++) {
-                const newObject = createObject(objectDepths[i]);
+                const newObject = createObject(false, objectDepths[i]);
                 data.deepcopy[i] = !data.deepcopy[i] ? getCloneTime(newObject, LIBRARIES.DEEPCOPY) : data.deepcopy[i] + getCloneTime(newObject, LIBRARIES.DEEPCOPY);
                 data.lodash[i] = !data.lodash[i] ? getCloneTime(newObject, LIBRARIES.LODASH) : data.lodash[i] + getCloneTime(newObject, LIBRARIES.LODASH);
                 data.clone[i] = !data.clone[i] ? getCloneTime(newObject, LIBRARIES.CLONE) : data.clone[i] + getCloneTime(newObject, LIBRARIES.CLONE);
@@ -47,7 +47,7 @@ export const getAllData = () => (dispatch) => {
         data.clone = data.clone.map(clone => clone / m);
         data.lodash = data.lodash.map(lodash => lodash / m);
         data.deepcopy = data.deepcopy.map(deepcopy => deepcopy / m);
-
+        console.log(data);
         dispatch({
             type: ACTIONS.GET_ALL_DATA,
             params: data
